@@ -1,19 +1,28 @@
-import pygame
 import random
 
-import src.globals as globals
-from src.unit import Unit
-from src.token import Token
-from src.bullet import Bullet
-from src.tail import Tail
+import pygame
+from pygame import Vector2
+
+from ..var import Units
+from ..const import Colors, Sizes
+from ..utils import random_display_position
+from .unit import Unit
+from .token import Token
+from .bullet import Bullet
+from .tail import Tail
 
 class Player(Unit):
-    
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs, color=(200, 200, 200), radius=20, line_width=6)
-        width, height = globals.display.get_size()
-        middle = pygame.Vector2(width/2, height/2)
-        self.direction = (middle - self.position).normalize()
+        super().__init__(
+            color = Colors.player,
+            radius = Sizes.player_radius,
+            line_width = Sizes.player_line_width,
+            speed = Vector2(),
+            position = random_display_position(),
+            *args, **kwargs
+        )
+
+        self.direction = Vector2()
         self.token_count = 0
         self.last_shot_time = 0
         self.last_tail = self
@@ -34,14 +43,14 @@ class Player(Unit):
 
     def shoot(self):
         current_time = pygame.time.get_ticks()
-        if current_time - self.last_shot_time < 100:  # ms between shots
+        if current_time - self.last_shot_time < Sizes.player_bullet_cooldown:  # ms between shots
             return  # too soon to shoot again
-        bullet_speed = 12
+        bullet_speed = Sizes.player_bullet_speed
         bullet_position = self.get_position() + self.direction * (self.radius * 1.5)  # spawn bullet just outside the player
         gaus = random.gauss(0, 2)  # small random angle for bullet spread
         direction = self.direction.rotate(gaus)
         bullet_speed = direction * bullet_speed
-        globals.units.append(Bullet(position=bullet_position, speed=bullet_speed))
+        Units.units.append(Bullet(position=bullet_position, speed=bullet_speed))
         self.last_shot_time = pygame.time.get_ticks()  # update last shot time
 
     def step(self):
@@ -50,12 +59,12 @@ class Player(Unit):
             self.direction = mouse_pos - self.position
             self.direction.normalize_ip()
         super().step()      # normal step behavior super class Unit
-        self.speed *= 0.94
+        self.speed *= Sizes.player_friction
 
     def draw(self, surface):
         super().draw(surface)  # normal draw behavior super class Unit
         end_pos = self.position + self.direction * (self.radius * 1.5)
-        pygame.draw.line(surface, (255, 255, 255), self.position, end_pos, self.line_width)
+        pygame.draw.line(surface, Colors.player_line, self.position, end_pos, self.line_width)
 
     def add_tail(self):
         prev_tail = self.last_tail
@@ -64,11 +73,11 @@ class Player(Unit):
                     direction=self.direction.copy(),
                     position=self.last_tail.position - 
                        self.last_tail.direction * (self.last_tail.radius * 2),
-                    speed=self.speed.copy(),
+                    speed=self.speed.copy(), # whatever the tail implementation is, im not fixing that ... -p1geon
                     )
         if prev_tail is not self:
             prev_tail.prev = self.last_tail 
-        globals.units.append(self.last_tail)
+        Units.units.append(self.last_tail)
 
     def collision(self, other):
         if isinstance(other, Token):  # special collision behavior for Token
@@ -79,4 +88,4 @@ class Player(Unit):
         else:
             super().collision(other)  # normal collision behavior super class Unit
             print('hitpoints:', self.hitpoints)
-            
+

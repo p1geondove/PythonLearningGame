@@ -1,31 +1,19 @@
-import pygame
-import random
-import math
+from random import random, uniform
 
-import src.globals as globals
+from pygame import Vector2
 
-def random_vector_rectangle(width, height):
-    x = random.uniform(0, width)
-    y = random.uniform(0, height)
-    return pygame.Vector2(x,y)
+from .globals import Globals
 
-def random_display_position(margin=20):
-    width, height = globals.display.get_size()
-    vec = random_vector_rectangle(width - 2 * margin, height - 2 * margin)
-    vec.x += margin
-    vec.y += margin
-    return vec
+def random_vector_rectangle(width:int|float, height:int|float):
+    return Vector2(random()*width, random()*height)
 
-def random_position(away_from, distance=200, margin=20, tries=50):
-    for _ in range(tries):  # try specified number of times to find a valid position
-        vec = random_display_position(margin)
-        if (vec - away_from).length() >= distance:
-            return vec
-    return None
+def random_display_position(margin:int|float=20):
+    width, height = Globals.display.get_size()
+    return random_vector_rectangle(width - 2 * margin, height - 2 * margin).elementwise() + margin
 
-def random_vector_circle(min_radius, max_radius):
-    angle = random.uniform(0, 2*math.pi)
-    radius = random.uniform(min_radius, max_radius)
-    speed_x = radius * math.cos(angle)
-    speed_y = radius * math.sin(angle)
-    return pygame.Vector2(speed_x, speed_y)
+def random_vector_circle(min_radius:int|float, max_radius:int|float):
+    return Vector2(uniform(min_radius, max_radius),).rotate(random()*360)
+
+def random_position(away_from:Vector2, distance:int|float=200, margin:int|float=20, tries:int=50):
+    delta = random_vector_circle(distance, distance)
+    return away_from + delta

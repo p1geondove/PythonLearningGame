@@ -1,4 +1,4 @@
 """PythonLearningGame package."""
-from src.game import Game
+from .game import Game
 
 __all__ = ["Game"]

@@ -1,12 +1,16 @@
+import random
 
 import pygame
-import random
-import src.globals as globals
-from src.cuptas_forbidden_apple import CuptasForbiddenApple
-from src.unit import Unit
+
+from ..globals import Globals
+from ..var import Units
+from ..const import Colors, Sizes
+from ..utils import random_display_position, random_vector_circle
+from .cuptas_forbidden_apple import CuptasForbiddenApple
+from .unit import Unit
 
 class Putler(Unit):
-    spawn_chance = 0.0005
+    spawn_chance = Sizes.putler_spawn_chance
     count = 0
     max_count = 1
     images = [pygame.image.load("assets/putler1.png"),
@@ -18,19 +22,21 @@ class Putler(Unit):
 
     def __init__(self, *args, **kwargs):
         width, height = Putler.images[0].get_size()
-        super().__init__(*args, **kwargs,
-                         radius=(width+height)/4,
-                         attack=1,
-                         hitpoints=300,
-                         color=(0, 255, 0),
-                         )
+        super().__init__(
+            color = Colors.putler,
+            radius = (width+height)//4,
+            line_width = 1,
+            attack = Sizes.putler_attack,
+            hit_points = Sizes.putler_hit_points,
+            *args, **kwargs
+        )
         self.change_image()
         self.holes = []
         Putler.count += 1
 
     def __del__(self):
         Putler.count -= 1
-        globals.player.token_count += 2
+        Globals.player.token_count += 2
 
     def change_image(self):
         self.image_index = random.randrange(0, len(Putler.images))
@@ -48,11 +54,11 @@ class Putler(Unit):
         super().step()
         if random.randint(1, 100) == 1:
             self.change_image()
-        direction = self.get_position() - globals.player.get_position()
+        direction = self.get_position() - Globals.player.get_position()
         distance = direction.length()
         if distance < 150:
             direction.normalize_ip()
-            self.speed = direction * 4        
+            self.speed = direction * 4
 
     def collision(self, other):
         super().collision(other)
@@ -70,8 +76,8 @@ class Putler(Unit):
         surface.blit(Putler.images[self.image_index], dst)
         for hole in self.holes:
             hole_pos = self.position + hole
-            pygame.draw.circle(surface, (0, 0, 0), hole_pos, 7)
+            pygame.draw.circle(surface, Colors.putler_hole, hole_pos, Sizes.putler_hole_size)
 
     def dies(self):
-        globals.units.append(CuptasForbiddenApple())
-        
+        Units.units.append(CuptasForbiddenApple(position = random_display_position(), speed = random_vector_circle(1,3)))
+

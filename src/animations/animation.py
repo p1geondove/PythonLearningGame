@@ -1,11 +1,7 @@
+from pygame import Surface, Vector2, Color
 
 class Animation:
-
-    def __init__(self,
-                 radius = 10,
-                 color = (0, 0, 255),
-                 position=None,
-                ):
+    def __init__(self, radius:int, color:Color, position:Vector2):
         self.radius = radius
         self.color = color
         self.position = position
@@ -15,6 +11,6 @@ class Animation:
 
     def is_running(self):
         return True
-    
-    def draw(self, surface):
+
+    def draw(self, surface:Surface):
         pass
