@@ -1,77 +1,33 @@
-# PythonLearningGame
-Game development by the [PythonLearning](https://www.reddit.com/r/PythonLearning/) Reddit community.
+> [!WARNING]
+> branch not made to be pushed (as of this commit), only for explaining
 
-I want your help to make this a fun Python game. It's purely educational, an opportunity to learn about:
-- Python
-- (quick and dirty) Object Oriented Programming
-- PyGame
-- Teamwork using GIT
+# Usage python native
+0. install git (not explaining that, you know it)
+1. clone repo `git clone https://github.com/bterwijn/PythonLearningGame.git`
+2. cd into repo `cd PythonLearningGame`
+3. run setup script (doesnt activate venv since its only in the scope of the bash script)
+4. activate venv `source venv/bin/activate`
+5. run game `python main.py`
 
-This should be accessible for Python students who are comfortable with loops, functions, and classes.
+# Usage uv
+0. install git and uv (uv is just one console comamnd `curl -LsSf https://astral.sh/uv/install.sh | sh`, windows similar)
+1. clone repo `git clone https://github.com/bterwijn/PythonLearningGame.git`
+2. cd into repo `cd PythonLearningGame`
+3. setup project `uv sync`
+4. run game `uv run main.py`
 
-![PythonLearningGame](images/PythonLearningGame.gif)
+# Diff
+## files added
+ - [`.python-version`][1]
+ - [`pyproject.toml`][2]
+ - [`uv.lock`][3]
 
-This GIF was recorded at branch/tag 'starting_point'. Many following commits have developed the game, but if you want to go back to the beginning, go here.
+## files removed
+ - [`setup.bat`][4]
+ - [`setup.sh`][5]
 
-# Active Forks
-
-- https://github.com/bterwijn/pythonlearninggame  (this repo)
-
-## Getting Started
-
-1. First [play the game](README.md#download).
-2. Then [see instructions to make and submit changes](MakeSubmitChanges.md).
-
-## Download
-
-### Security Warning
-We review submitted code changes for safety, but we can't guarantee no malicious code was introduced. We are **not responsible for any damages** as a result of running code in any of these forks. For proper safety, run this game:
-1. In a Docker container or virtual machine (best isolation)
-2. In a separate user account with limited permissions
-3. After reviewing the source code yourself
-
-### Install GIT
-First install GIT:
-- **Linux**: https://git-scm.com/download/linux
-- **MacOS**: https://git-scm.com/download/mac
-- **Windows**: https://git-scm.com/download/win
-
-### Clone a Fork
-In a terminal:
-```bash
-git clone https://github.com/bterwijn/PythonLearningGame.git  # or other fork
-```
-
-## Setup
-This will:
-1. Create and activate a virtual environment
-2. Install all dependencies
-
-### on Linux/MacOS
-Open a terminal in the project folder and run:
-```bash
-bash setup.sh
-```
-
-### on Windows
-**Double-click `setup.bat`** in the project folder.
-
-**If double-clicking doesn't work:**
-1. Open Command Prompt (`cmd.exe`)
-2. Navigate to the project folder: `cd path\to\PythonLearningGame`
-3. Run: `setup.bat`
-
-## Play
-Run the game:
-```bash
-python main.py
-```
-
-### Deactivate Virtual Environment
-When you're done:
-```bash
-deactivate
-```
-
-# Making and Submitting Changes
-See these [instructions to make and submit changes](MakeSubmitChanges.md) to this game. Happy coding!
+[1]:https://github.com/p1geondove/PythonLearningGame/blob/switch_to_uv/.python-version
+[2]:https://github.com/p1geondove/PythonLearningGame/blob/switch_to_uv/pyproject.toml
+[3]:https://github.com/p1geondove/PythonLearningGame/blob/switch_to_uv/uv.lock
+[4]:https://github.com/bterwijn/PythonLearningGame/blob/main/setup.bat
+[5]:https://github.com/bterwijn/PythonLearningGame/blob/main/setup.sh

@@ -1,0 +1,16 @@
+[project]
+name = "pythonlearninggame"
+version = "0.1.0"
+description = "Game development by PythonLearning Reddit community"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "pygame-ce>=2.5.8",
+]
+
+[project.scripts]
+pythonlearninggame = "pythonlearninggame:main"
+
+[build-system]
+requires = ["uv_build>=0.12.5,<0.13.0"]
+build-backend = "uv_build"
