@@ -10,7 +10,7 @@ class Animation:
         self.color = color
         self.position = position
 
-    def step(self):
+    def step(self, dt):
         pass
 
     def is_running(self):

@@ -19,10 +19,10 @@ class Seeker(Unit):
     def __del__(self):
         Seeker.count -= 1
 
-    def step(self):  # overwrite normal Unit step
+    def step(self, dt):  # overwrite normal Unit step
         direction = globals.player.get_position() - self.get_position()  # direction to player
         direction.normalize_ip()  # make direction vector length 1
         acceleration = 0.15
         self.speed += direction * acceleration  # accelerate towards player
         self.speed *= 0.95  # add some friction
-        super().step()  # do normal Unit step
+        super().step(dt)  # do normal Unit step

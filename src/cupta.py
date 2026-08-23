@@ -48,8 +48,8 @@ class Cupta(Unit):
         Cupta.count -= 1
         globals.player.token_count += 5
 
-    def step(self):
-        super().step()
+    def step(self, dt):
+        super().step(dt)
         self.position.x = self.x
         cupta_snake_rectangle_collision_shape_box = pygame.Rect(
             self.position.x,

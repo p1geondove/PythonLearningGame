@@ -44,12 +44,12 @@ class Player(Unit):
         globals.units.append(Bullet(position=bullet_position, speed=bullet_speed))
         self.last_shot_time = pygame.time.get_ticks()  # update last shot time
 
-    def step(self):
+    def step(self, dt):
         if pygame.mouse.get_focused():  # if mouse is on screen
             mouse_pos = pygame.Vector2(pygame.mouse.get_pos())
             self.direction = mouse_pos - self.position
             self.direction.normalize_ip()
-        super().step()      # normal step behavior super class Unit
+        super().step(dt)      # normal step behavior super class Unit
         self.speed *= 0.94
 
     def draw(self, surface):

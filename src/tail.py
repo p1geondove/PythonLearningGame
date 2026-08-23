@@ -25,8 +25,8 @@ class Tail(Unit):
     def __del__(self):
         Tail.count -= 1
 
-    def step(self):
-        super().step()  # normal step behavior super class Unit
+    def step(self, dt):
+        super().step(dt)  # normal step behavior super class Unit
         if self.next:
             self.direction = self.next.get_position() - self.get_position()
             dist = self.direction.length()

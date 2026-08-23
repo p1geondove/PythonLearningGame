@@ -28,14 +28,14 @@ class Troll(Unit):
     def randomize_acceleration(self):
         self.acceleration = random.uniform(-0.1, 0.3)
 
-    def step(self):
+    def step(self, dt):
         if random.randint(1, 30) == 1:
             self.randomize_acceleration()
         direction = globals.player.get_position() - self.get_position()
         direction.normalize_ip()
         self.speed += direction * self.acceleration
         self.speed *= 0.95
-        super().step()
+        super().step(dt)
 
     def draw(self, surface):
         dst = self.position.copy()

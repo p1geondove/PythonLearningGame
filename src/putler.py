@@ -44,8 +44,8 @@ class Putler(Unit):
             self.contract_vec.x-= c_width / 2
             self.contract_vec.y-= c_height / 2
 
-    def step(self):
-        super().step()
+    def step(self, dt):
+        super().step(dt)
         if random.randint(1, 100) == 1:
             self.change_image()
         direction = self.get_position() - globals.player.get_position()

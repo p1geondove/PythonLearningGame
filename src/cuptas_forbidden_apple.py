@@ -27,8 +27,8 @@ class CuptasForbiddenApple(Unit):
         )
         self.collected = False
 
-    def step(self):
-        super().step()
+    # def step(self):
+    #     super().step()
 
     def collision(self, other):
         if isinstance(other, Player):

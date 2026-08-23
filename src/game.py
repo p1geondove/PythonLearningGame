@@ -26,6 +26,7 @@ class Game:
         for i in range(10):
             globals.player.add_tail()  # start with tail of 10 segments
         self.mouse_buttons_down = {}
+        self.dt = 1
 
     def spawn_unit(self, unit_class):
         position = utils.random_position(away_from=globals.player.get_position())
@@ -89,7 +90,7 @@ class Game:
     def step_units(self):
         for unit in globals.units:
             pos_old = unit.get_position().copy() # when colliding, we will revert to this position
-            unit.step()
+            unit.step(self.dt)
             for other in globals.units:
                 if unit is not other: # don't collide with self
                     square_distance = (unit.get_position() - other.get_position()).length_squared()
@@ -143,7 +144,7 @@ class Game:
 
     def step_animations(self):
         for animation in globals.animations:
-            animation.step()
+            animation.step(self.dt)
 
     def draw_animations(self):
         for animation in globals.animations:
@@ -181,5 +182,6 @@ class Game:
                 self.running = False
 
             pygame.display.flip()  # draw everything to the display
-            clock.tick()
+            self.dt = clock.tick()
+            pygame.display.set_caption(f"{clock.get_fps():.0f} {self.dt}")
         print("Game Over")

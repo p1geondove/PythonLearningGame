@@ -9,8 +9,8 @@ class Explosion(Animation):
         self.growth_rate = 7
         self.color_step = 200 / ((self.max_radius - radius) / self.growth_rate)
 
-    def step(self):
-        self.radius += self.growth_rate
+    def step(self, dt):
+        self.radius += self.growth_rate * dt / (1000/60)
         self.color = (max(0, self.color[0] - self.color_step),
                       max(0, self.color[1] - self.color_step),
                       max(0, self.color[2] - self.color_step))

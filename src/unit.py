@@ -29,8 +29,8 @@ class Unit:
         self.hitpoints = hitpoints
         self.attack = attack
 
-    def step(self):
-        self.position += self.speed
+    def step(self, dt):
+        self.position += self.speed * dt/(1000/60)
 
     def collide_border(self):
         pass
